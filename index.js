@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config(); 
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080;
 
 // Middleware to parse incoming form data
 app.use(bodyParser.urlencoded({ extended: true }));
