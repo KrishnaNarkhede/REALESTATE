@@ -1,10 +1,13 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const path = require('path');  // Added to handle file paths
+const path = require('path');  
+const dotenv = require('dotenv'); // Import dotenv
+
+dotenv.config(); // Load environment variables from .env file
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3001; // Use PORT from .env or default to 3001
 
 // Middleware to parse incoming form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,12 +16,12 @@ app.use(bodyParser.json());
 // Serve static files (HTML, CSS, JS) from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Create MySQL connection
+// Create MySQL connection using environment variables
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',  // Change as necessary
-    password: '',  // Change as necessary
-    database: 'cp_database'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,  
+    password: process.env.DB_PASSWORD,  
+    database: process.env.DB_DATABASE
 });
 
 // Connect to MySQL
@@ -63,9 +66,8 @@ app.post('/process_contact', (req, res) => {
 });
 
 app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname,))
-}
-)
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Adjust the path as necessary
+});
 
 // Start server
 app.listen(port, () => {
