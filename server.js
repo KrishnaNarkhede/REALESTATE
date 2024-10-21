@@ -65,6 +65,14 @@ app.post('/process_contact', (req, res) => {
     });
 });
 
+app.get('testget',(req,res)=>{
+    res.send("I am live on get");
+})
+
+app.post('testpost',(req,res)=>{
+    res.send("I am live on post");
+})
+
 app.get("*",(req,res)=>{
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Adjust the path as necessary
 });
